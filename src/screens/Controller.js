@@ -4,7 +4,10 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import Login from "./login/Login";
 
 class Controller extends Component {
-
+    constructor() {
+        super();
+        this.baseUrl = "https://graph.instagram.com/";
+    }
     render() {
         return (
             <Router>
