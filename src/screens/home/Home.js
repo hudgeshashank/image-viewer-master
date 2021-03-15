@@ -135,6 +135,32 @@ class Home extends Component {
         }, this);
     };
 
+    //function to unlike a post
+    likedClickHandler = (id) => {
+        let postList = this.state.postList;
+        postList.forEach(function (post) {
+            // if the post id equal to the liked post id then display the likeIcon, hide the likedIcon, and decrement like count by 1
+            if (post.id === id) {
+                post.likes.count -= 1;
+                post.likeIcon = "dispBlock";
+                post.likedIcon = "dispNone";
+                this.setState({
+                    likeIcon: "dispBlock",
+                    likedIcon: "dispNone",
+                });
+            }
+        }, this);
+    };
+
+    commentChangeHandler = (e, id) => {
+        this.setState({ comment: e.target.value });
+        let postList = this.state.postList;
+        postList.forEach(function (post) {
+            if (post.id === id) {
+                post.clear = e.target.value;
+            }
+        }, this);
+    };
 
     addCommentHandler = (id) => {
         if (this.state.comment === "") {
@@ -246,7 +272,28 @@ class Home extends Component {
                                                 ))}
                                             </div>
                                             <br />
-
+                                            <div className="comments">
+                                                <FormControl className="control">
+                                                    <InputLabel htmlFor="comment">
+                                                        Add a comment
+                                                    </InputLabel>
+                                                    <Input
+                                                        comment={this.state.comment}
+                                                        onChange={(e) =>
+                                                            this.commentChangeHandler(e, post.id)
+                                                        }
+                                                        value={post.clear}
+                                                    />
+                                                </FormControl>
+                                                <Button
+                                                    variant="contained"
+                                                    color="primary"
+                                                    style={{ marginLeft: 20 }}
+                                                    onClick={() => this.addCommentHandler(post.id)}
+                                                >
+                                                    ADD
+                                                </Button>
+                                            </div>
                                         </CardContent>
                                     </div>
                                 </Card>
